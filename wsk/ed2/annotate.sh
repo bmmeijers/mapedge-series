@@ -1,0 +1,1 @@
+.venv/bin/mapedge annotate -s uuid /home/martijn/Documents/work/2023-08_synthesis/mapedge/series/wsk/ed2/wsk_ed2.geojson /tmp/corners-wsk-ed2/*.json /home/martijn/Documents/work/2023-08_synthesis/mapedge/series/wsk/ed2/multiple_page.json

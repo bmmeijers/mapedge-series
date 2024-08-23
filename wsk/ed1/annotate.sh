@@ -1,0 +1,2 @@
+# .venv/bin/mapedge annotate /home/martijn/Documents/work/2023-08_synthesis/mapedge/series/wsk/artificial_index.geojson -s sheet_id /tmp/corners-wsk/*.json /home/martijn/Documents/work/2023-08_synthesis/mapedge/series/wsk/ed1/multiple_page.json
+.venv/bin/mapedge annotate /home/martijn/Documents/work/2023-08_synthesis/mapedge/series/wsk/ed1/sheet_index.geojson -s uuid /tmp/corners-wsk/*.json /home/martijn/Documents/work/2023-08_synthesis/mapedge/series/wsk/ed1/multiple_page.json

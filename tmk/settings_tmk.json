@@ -1,0 +1,62 @@
+{
+  "pipeline_overview": "bgr2rgb|gray|adaptive_threshold",
+  "overview_width": 1024,
+  "expected_layouts": [
+    [
+      [
+        50,
+        970
+      ],
+      [
+        65,
+        650
+      ]
+    ]
+  ],
+  "glob_pattern": "/scratch/iiif_cache/tmk_hires/*.json",
+  "glob_start": 0,
+  "output_folder": "/scratch/iiif_inspect/tmk_hires",
+  "rim_fraction_filled": 0.55,
+  "interactive_plots": false,
+  "produce_output": true,
+  "enable_caching": false,
+  "part_size": 100,
+  "find_rims": [
+    {
+      "rim_to_find": "outer",
+      "rim_width_fuzzy": [
+        10,
+        16,
+        20,
+        26
+      ],
+      "pipeline_detail": "bgr2rgb|gray|threshold(150)",
+      "pipeline_detail_split_horizontal_vertical": false,
+      "rim_fraction_filled": 0.5
+    },
+    {
+      "rim_to_find": "outer-inner",
+      "rim_width_outer_fuzzy": [
+        10,
+        16,
+        20,
+        26
+      ],
+      "rim_width_inner_fuzzy": [
+        0,
+        2,
+        4,
+        8
+      ],
+      "rim_outer_inner_distance_fuzzy": [
+        170,
+        190,
+        210,
+        240
+      ],
+      "pipeline_detail_split_horizontal_vertical": false,
+      "rim_fraction_filled": 0.75,
+      "pipeline_detail": "bgr2rgb|gray|threshold(185)"
+    }
+  ]
+}

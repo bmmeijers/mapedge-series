@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "sheet23_bonne",
+"xy_coordinate_resolution": 0.1,
+"features": [
+{ "type": "Feature", "properties": { "name": "Sheet 23" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ 139199.1, 110823.3 ], [ 159196.1, 110955.6 ], [ 159019.7, 135952.8 ], [ 139023.0, 135821.3 ], [ 139199.1, 110823.3 ] ] ] } }
+]
+}

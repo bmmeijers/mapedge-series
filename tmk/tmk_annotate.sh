@@ -1,0 +1,2 @@
+# mapedge annotate -s sheet_id /home/martijn/Documents/work/2023-08_synthesis/vu_high_res/tmk_index_map.geojson /tmp/corner-test/*.json /tmp/multiple_page.json
+mapedge annotate -s sheet_id /home/martijn/Documents/work/2023-08_synthesis/vu_high_res/tmk_index_map.geojson /tmp/corners/*.json /tmp/multiple_page.json

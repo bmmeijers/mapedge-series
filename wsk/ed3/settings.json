@@ -1,0 +1,42 @@
+{
+  "overview_width": 1024,
+  "pipeline_overview": "bgr2rgb|gray|equalize_clahe|otsu_threshold|make_fat(2,4)|canny|invert",
+  "expected_layouts": [
+    [
+      [
+        20,
+        640
+      ],
+      [
+        20,
+        760
+      ]
+    ]
+  ],
+  "output_folder": "/scratch/iiif_inspect/wsk_edition_3",
+  "part_size": 30,
+  "erode_dilate_kernel": 5,
+  "samples_along_rim": 5,
+  "samples_outskirt": 0.15,
+  "rim_threshold": 155,
+  "rim_offset": 50,
+  "rim_size_pixels": 5,
+  "rim_fraction_filled": 0.5,
+  "interactive_plots": true,
+  "produce_output": true,
+  "enable_caching": false,
+  "find_rims": [
+    {
+      "rim_to_find": "outer",
+      "rim_width_fuzzy": [
+        3,
+        4,
+        11,
+        13
+      ],
+      "pipeline_detail": "bgr2rgb|gray|threshold(130)",
+      "pipeline_detail_split_horizontal_vertical": false,
+      "rim_fraction_filled": 0.5
+    }
+  ]
+}

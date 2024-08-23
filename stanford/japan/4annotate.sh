@@ -1,0 +1,1 @@
+mapedge annotate -s uuid /home/martijn/Documents/work/2023-08_synthesis/mapedge/series/stanford/japan/sheet_index.geojson /tmp/corners/*.json /tmp/multiple_page.json

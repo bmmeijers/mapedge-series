@@ -1,0 +1,2 @@
+- [ ] zc857my1503_00_0001 = folded top left
+- [ ] fg106xz0738 = broken sheet 

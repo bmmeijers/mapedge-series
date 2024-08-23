@@ -1,0 +1,1 @@
+.venv/bin/mapedge annotate /home/martijn/Documents/work/2023-08_synthesis/mapedge/series/wsk/artificial_index.geojson /tmp/corners-wsk-ed1-bis/*.json /home/martijn/Documents/work/2023-08_synthesis/mapedge/series/wsk/ed1bis/multiple_page.json

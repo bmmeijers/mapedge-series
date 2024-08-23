@@ -1,0 +1,28 @@
+{
+  "expected_layouts": [
+    [
+      [
+        210,
+        810
+      ],
+      [
+        45,
+        790
+      ]
+    ]
+  ],
+  "find_rims": [
+    {
+      "rim_to_find": "outer",
+      "rim_width_fuzzy": [
+        4,
+        10,
+        11,
+        13
+      ],
+      "pipeline_detail": "bgr2rgb|gray|threshold(130)",
+      "pipeline_detail_split_horizontal_vertical": false,
+      "rim_fraction_filled": 0.5
+    }
+  ]
+}

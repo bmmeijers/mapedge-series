@@ -1,0 +1,1 @@
+mapedge report /tmp/corners/ /tmp/report.csv

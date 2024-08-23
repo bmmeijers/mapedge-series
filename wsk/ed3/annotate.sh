@@ -1,0 +1,3 @@
+# annotate the 
+#mapedge annotate -s uuid /home/martijn/Documents/work/2023-08_synthesis/mapedge/series/wsk/ed3/wsk_ed3.geojson /tmp/start_annotate/*.json /home/martijn/Documents/work/2023-08_synthesis/mapedge/series/wsk/ed3/multiple_page.json
+mapedge annotate -s sheet_id /home/martijn/Documents/work/2023-08_synthesis/mapedge/series/wsk/ed3/wsk_ed3.geojson /tmp/corners-wsk-ed3/*.json /home/martijn/Documents/work/2023-08_synthesis/mapedge/series/wsk/ed3/multiple_page.json

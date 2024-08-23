@@ -1,0 +1,20 @@
+{
+"type": "FeatureCollection",
+                                                                               
+"features": [
+{ 
+    "type": "Feature", 
+    "properties": 
+        { "name": "Sheet 23" }, 
+    "geometry": 
+        { "type": "Polygon", "coordinates": [ [ 
+[ 260000, 500000 ], 
+[ 280000, 500000 ],
+[ 280000, 525000 ],
+[ 260000, 525000 ],
+[ 260000, 500000 ]
+]
+]
+} }
+]
+}
