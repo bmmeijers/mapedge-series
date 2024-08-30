@@ -107,6 +107,7 @@ custom_mapping = {
 
 custom_sizes = {
     41: [20650, 25000],  # sheet 25.O
+    43: [20000, 25250],  # sheet 26.O
     69: [20000, 16000],  # sheet 41.O
     94: [26000, 25000],  # sheet 57.W
     97: [15250, 25000],  # sheet 58.O -- FIXME: overlaps a bit with neighbouring sheets
