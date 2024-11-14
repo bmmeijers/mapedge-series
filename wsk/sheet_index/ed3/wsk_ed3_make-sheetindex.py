@@ -105,9 +105,19 @@ custom_mapping = {
 # - [ ] 0b14025b-49d4-4a17-a670-579e28ccf0a8_82/ 3 Uithuizen Oost
 #       -- lijkt geen 20km breedte te hebben, maar ietsje smaller te zijn
 
+## The global anchor point from where we start
+anchor = [0, 625000]
+## The default sheet size (w x h)
+size = [20000, 25000]
+
+## The following sheets have a different size
 custom_sizes = {
+    10: [21500, 25000],  # Leeuwarden Oost
+    12: [22000, 25000],  # Groningen 7 Oost
+    20: [21300, 25000],  # 12.O assen oost
     41: [20650, 25000],  # sheet 25.O
-    43: [20000, 25250],  # sheet 26.O
+    36: [21000, 25625],  # sheet 22.W - coevoorden west
+    54: [20550, 25000],  # sheet 32.O
     69: [20000, 16000],  # sheet 41.O
     94: [26000, 25000],  # sheet 57.W
     97: [15250, 25000],  # sheet 58.O -- FIXME: overlaps a bit with neighbouring sheets
@@ -116,24 +126,35 @@ custom_sizes = {
     101: [9750, 12100],  # sheet 29 (inset, not part of original manifest)
 }
 
+# The following sheets have a different anchor
 custom_anchors = {
+    11: [220_000 + 1_500, 600_000],
+    13: [260_000 + 2_000, 600_000],
     # move south 12'500m
     0: [140000, 625000 - 12500],  # 1.W
     7: [140000, 600000 - 12500],  # 5.W
     15: [140000, 575000 - 12500],  # 10.W
     24: [140000, 550000 - 12500],  # 15.O
     #
+    #
+    43: [160000, 500000 - 250],  # sheet 26.O (harderwijk oost)
     14: [100000 + 4500, 575000],  # sheet 9. (texel)   # FIXME:GUESS
     6: [120000 - 4000, 600000],  # sheet 4. (vlieland) # FIXME:GUESS
     1: [160000 + 10500, 625000],  # 1.O (Ameland), move 10'000m east
     39: [81000, 500000],  # sheet 24
     94: [134000, 375000],  # sheet 57.W
     81: [40000, 403250],  # sheet 48.O
+    #
+    #
+    # The following 4 sheets are in Bonne!
+    #
     # This move of 7500m north is a guess
     90: [0, 375000 + 7500],  #  sheet 53 # FIXME:GUESS
     91: [20000, 375000 + 7500],  # 54.W  # FIXME:GUESS
     92: [40000, 375000 + 7500],  # 54.O  # FIXME:GUESS
     93: [60000, 375000 + 7500],  # 55    # FIXME:GUESS
+    #
+    #
     #
     98: [+23000 + 155000, -113000 + 463000],  # sheet 60
     99: [+15000 + 155000, -138000 + 463000],  # sheet 61
@@ -141,8 +162,43 @@ custom_anchors = {
     101: [260000, 475000],  # sheet 29, inset (south part below main sheet 29)
 }
 
-anchor = [0, 625000]
-size = [20000, 25000]
+## FIXME:
+# Process the sheets in Bonne coordinates here
+# If we record their anchor and (custom size) in Bonne,
+# transform to RD (EPSG:28992) this is **not** sufficient
+# as there is a bit of rotation between the two systems
+# hence, we should produce a rectangle (4 coordinates) in RD
+# and use this
+
+bonne_sheets = [
+    # 7 Groningen West (Canvas 13)
+    # 7 Groningen Oost (Canvas 12)
+    # 8 Nieuwe Schans (Canvas 14)
+    11,
+    12,
+    13,
+    #
+    # - 53 Sluis (Canvas 91)
+    # - 54 Neuzen West (Canvas 93)
+    # - 54 Neuzen Oost (Canvas 92)
+    # - 55 Hulst (Canvas 94)
+    90,
+    91,
+    92,
+    93,
+]
+
+bonne_anchors = {
+    # Groningen
+    11: [100_000, 210_000],
+    12: [120_000, 210_000],
+    13: [140_000, 210_000],
+    # Zeeland
+    90: [-120_000, -15_000 + 7_000],
+    91: [-100_000, -15_000 + 6_000],
+    92: [-80_000, -15_000 + 6_000],
+    93: [-60_000, -15_000 + 6_000],
+}
 
 M = []
 for index in range(0, 103):  # 1 more than in the manifest (inset in 29)
@@ -150,24 +206,76 @@ for index in range(0, 103):  # 1 more than in the manifest (inset in 29)
         [c, r] = custom_mapping[index]
     else:
         c += 1
-    # specify special sheets
-    # - [x] custom anchor
-    # - [x] custom size
-    if index in custom_sizes:
-        tile_size = custom_sizes[index]
-    else:
-        tile_size = size
-    if index in custom_anchors:
-        tl = custom_anchors[index]
-    else:
-        tl = add(mul(mul([1, -1], [c, r]), size), anchor)
 
-    br = add(tl, mul([1, -1], tile_size))
-    xmin, ymax = tl
-    xmax, ymin = br
-    bl = (xmin, ymin)
-    tr = (xmax, ymax)
-    rect = as_rect(bl, tr)
+    ## Handle Bonne sheets
+    if index in bonne_sheets and index in bonne_anchors:
+        # we could have sheets that have a custom size?
+        # if index in custom_sizes:
+        #     tile_size = custom_sizes[index]
+        # else:
+        tile_size = size
+
+        tl = bonne_anchors[index]
+        br = add(tl, mul([1, -1], tile_size))
+        print(f"{tl=} {br=}")
+        xmin, ymax = tl
+        xmax, ymin = br
+        bl = (xmin, ymin)
+        tr = (xmax, ymax)
+
+        from pyproj import CRS
+        from pyproj import Transformer
+
+        crs_from = CRS.from_proj4(
+            "+proj=bonne +lat_1=51.5 +lon_0=0 "
+            "+a=6376950.4 +rf=309.65 +pm=4.883882778 "
+            "+towgs84=932.9862,86.2986,-197.9356,-2.276813,-1.478043,-4.673555,50.09450"
+        )
+        # print(crs_from.to_wkt(WktVersion.WKT1_GDAL, pretty=True))
+        crs_to = CRS.from_string("EPSG:28992")
+
+        transformer = Transformer.from_crs(crs_from, crs_to)
+
+        decimals = 1
+        # bl = list(map(lambda x: round(x, decimals), transformer.transform(xmin, ymin)))
+        # tr = list(map(lambda x: round(x, decimals), transformer.transform(xmax, ymax)))
+
+        rect = as_rect(bl, tr)
+        # for ring in rect:
+        #     :
+        # rect = [
+        #     list(map(lambda x: round(x, decimals), transformer.transform(*pt)))
+        #     for pt in [ring for ring in rect]
+        # ]
+        new_rect = []
+        for ring in rect:
+            for pt in ring:
+                print(pt)
+                transformed = transformer.transform(*pt)
+                transformed = list(map(lambda x: round(x, decimals), transformed))
+                print(transformed)
+                # new_pt =
+                new_rect.append(transformed)
+        rect = [new_rect]
+    else:
+        # specify special sheets
+        # - [x] custom anchor
+        # - [x] custom size
+        if index in custom_sizes:
+            tile_size = custom_sizes[index]
+        else:
+            tile_size = size
+        if index in custom_anchors:
+            tl = custom_anchors[index]
+        else:
+            tl = add(mul(mul([1, -1], [c, r]), size), anchor)
+
+        br = add(tl, mul([1, -1], tile_size))
+        xmin, ymax = tl
+        xmax, ymin = br
+        bl = (xmin, ymin)
+        tr = (xmax, ymax)
+        rect = as_rect(bl, tr)
     M.append([index, as_polygon(rect)])
 
 # process the manifest into a dictionary, so we can lookup based on sheet id / sub sheet id the iiif url and canvas label
