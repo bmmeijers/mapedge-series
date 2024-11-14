@@ -1,0 +1,103 @@
+{
+  "enable_caching": false,
+  "produce_output": true,
+  "interactive_plots": false,
+  "overview_width": 1024,
+  "pipeline_overview": "bgr2rgb|gray|equalize_clahe|otsu_threshold|make_fat(2,4)|canny|invert",
+  "expected_layouts": [
+    [
+      [
+        210,
+        820
+      ],
+      [
+        220,
+        610
+      ]
+    ]
+  ],
+  "output_folder": "/scratch/iiif_inspect/wsk_ed2_uu__both_frames__black/",
+  "frames-to-find": [
+    {
+      "part-size": 30,
+      "pipeline-detail": "bgr2rgb|gray|threshold(200)",
+      "label": "outer-inner",
+      "strategy": "peaks-with-offset",
+      "peaks": [
+        {
+          "label": "outer",
+          "threshold": 0.75,
+          "compare": ">",
+          "fuzzy": {
+            "type": "trapezoidal",
+            "parameters": [ 
+              6,
+              7,
+              9,
+              16
+            ],
+            "threshold": 0.1
+          }
+        },
+        {
+          "label": "inner",
+          "threshold": 0.75,
+          "compare": ">",
+          "fuzzy": {
+            "type": "trapezoidal",
+            "parameters": [ 
+              0,
+              2,
+              4,
+              6
+            ],
+            "threshold": 0.1
+          }
+        }
+      ],
+      "distance-between": {
+        "sides": [
+          "inner",
+          "inner"
+        ],
+        "fuzzy": {
+          "type": "triangular",
+          "parameters": [
+            50,
+            80,
+            115
+          ],
+          "threshold": 0.0
+        }
+      },
+      "final-location": {
+        "peak-index": 1,
+        "side": "inner"
+      }
+    },
+    {
+      "part-size": 40,
+      "pipeline-detail": "bgr2rgb|gray|equalize_clahe|otsu_threshold",
+      "label": "outer",
+      "strategy": "single-peak",
+      "peak": {
+        "label": "outer",
+        "threshold": 0.75,
+        "compare": ">",
+        "fuzzy": {
+          "type": "trapezoidal",
+          "parameters": [ 
+            4,
+            7,
+            9,
+            16
+          ],
+          "threshold": 0.1
+        }
+      },
+      "final-location": {
+        "side": "center"
+      }
+    }
+  ]
+}
