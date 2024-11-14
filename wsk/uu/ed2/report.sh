@@ -1,0 +1,1 @@
+mapedge report /tmp/corners-wsk-ed2-uu/ /tmp/report.csv

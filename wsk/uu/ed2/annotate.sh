@@ -1,0 +1,2 @@
+# mapedge annotate /home/martijn/Documents/work/2023-08_synthesis/mapedge/series/wsk/uu/ed2/wsk2-wgs84-poly.geojson -s sheet /tmp/start_annotate/*.json /home/martijn/Documents/work/2023-08_synthesis/mapedge/series/wsk/uu/ed2/annotation_page.json
+mapedge annotate /home/martijn/Documents/work/2023-08_synthesis/mapedge/series/wsk/uu/ed2/wsk2-wgs84-poly.geojson -s uuid /tmp/corners-wsk-ed2-uu/*.json /home/martijn/Documents/work/2023-08_synthesis/mapedge/series/wsk/uu/ed2/annotation_page.json

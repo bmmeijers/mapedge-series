@@ -1,0 +1,46 @@
+{
+  "enable_caching": false,
+  "produce_output": true,
+  "interactive_plots": false,
+  "overview_width": 1024,
+  "pipeline_overview": "bgr2rgb|gray|equalize_clahe|otsu_threshold|make_fat(2,4)|canny|invert",
+  "expected_layouts": [
+    [
+      [
+        210,
+        820
+      ],
+      [
+        220,
+        610
+      ]
+    ]
+  ],
+  "output_folder": "/scratch/iiif_inspect/wsk_ed2_uu__thick_frame/",
+  "frames-to-find": [
+    {
+      "part-size": 10,
+      "pipeline-detail": "bgr2rgb|gray|equalize_clahe|otsu_threshold",
+      "label": "outer",
+      "strategy": "single-peak",
+      "peak": {
+        "label": "outer",
+        "threshold": 0.75,
+        "compare": ">",
+        "fuzzy": {
+          "type": "trapezoidal",
+          "parameters": [ 
+            4,
+            7,
+            9,
+            16
+          ],
+          "threshold": 0.1
+        }
+      },
+      "final-location": {
+        "side": "center"
+      }
+    }
+  ]
+}
